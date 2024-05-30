@@ -1,6 +1,6 @@
-# TD IMMIGRATION WEBSITE
+# JEOPARDY GAME WEBSITE
 
-The Immigration site project is a user-friendly web application built for the PassMark Canada. This application aims to help users find information about services offered by PassMark Canada and ability to contact the team to inquire about said services.
+The Jeopardy Game Website project is a user-friendly web application built to simulate the Jeopardy game.
 
 ## Table of Contents
 - [Frontend](#frontend)
