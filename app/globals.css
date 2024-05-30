@@ -31,3 +31,68 @@ body {
     text-wrap: balance;
   }
 }
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px; 
+  transform-origin: center bottom;
+  animation: fall 4s linear infinite;
+  animation-timing-function: ease-in;
+}
+
+.confetti.square {
+  clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);
+}
+.confetti.triangle {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+.card {
+  transform-style: preserve-3d;
+  transition: 500ms;
+  transform: perspective(1000px) rotateY(var(--rotate-y, 0))
+
+}
+
+.card.flip {
+  --rotate-y: 180deg;
+}
+
+.card-fb {
+  backface-visibility: hidden;
+}
+
+/* @keyframes fall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-50vh) rotate(180deg);
+  }
+  50% {
+    transform: translateY(-25vh) rotate(360deg);
+  }
+  100% {
+    transform: translateY(0vh) rotate(720deg);
+  }
+} */
+
+@keyframes fall {
+  0% {
+    transform: translateY(0vh) rotate(0deg);
+  }
+  25% {
+    transform: translateY(25vh) rotate(180deg);
+  }
+  50% {
+    transform: translateY(50vh) rotate(360deg);
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+  }
+}
