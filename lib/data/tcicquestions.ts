@@ -1,6 +1,7 @@
 export const fathersQuestionData = [
   {
     id: 1,
+    name: "characters",
     cat: [
       {
         id: 1,
@@ -62,6 +63,7 @@ export const fathersQuestionData = [
   },
   {
     id: 2,
+    name: "places",
     cat: [
       {
         id: 1,
@@ -123,6 +125,7 @@ export const fathersQuestionData = [
   },
   {
     id: 3,
+    name: "bible_men",
     cat: [
       {
         id: 1,
@@ -184,6 +187,7 @@ export const fathersQuestionData = [
   },
   {
     id: 4,
+    name: "trivia",
     cat: [
       {
         id: 1,
@@ -245,6 +249,7 @@ export const fathersQuestionData = [
   },
   {
     id: 5,
+    name: "bible_quotes",
     cat: [
       {
         id: 1,
@@ -306,6 +311,7 @@ export const fathersQuestionData = [
   },
   {
     id: 6,
+    name: "tcic",
     cat: [
       {
         id: 1,

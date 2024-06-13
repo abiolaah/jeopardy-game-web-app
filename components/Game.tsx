@@ -21,7 +21,6 @@ export default function Game({
   team: typeof teams;
   setTeam: (t: typeof teams) => void;
 }) {
-
   const [numberOfTries, setNumberOfTries] = useState(0);
   const [endGame, setEndGame] = useState(false);
   const [currentScore, setCurrentScore] = useState(0);
@@ -32,7 +31,6 @@ export default function Game({
   const [error, setError] = useState("");
   const [currentTeam, setCurrentTeam] = useState("");
   const [winningTeam, setWinningTeam] = useState<Team[] | null>(null);
-  
 
   useEffect(() => {
     const winAudio = new Audio("./sounds/win.wav");
@@ -68,30 +66,40 @@ export default function Game({
     setWinningTeam(winner);
   };
 
-
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
-      {flip && <Confetti width={2000} height={1000} numberOfPieces={1000} tweenDuration={100} />}
-      <Header
-        header={Parser(`JEOPARDY <br />
+      {flip && (
+        <Confetti
+          width={2000}
+          height={1000}
+          numberOfPieces={1000}
+          tweenDuration={100}
+        />
+      )}
+      <div className="absolute top-0 mb-16 w-full">
+        <Header
+          header={Parser(`JEOPARDY <br />
             <span className="text-4xl">TCIC YYC FATHER&apos;S DAY EDITION</span>`)}
-      />
+        />
+      </div>
 
       {/* SCORE BOARD */}
-      <div className={`w-full flex gap-16 items-center justify-evenly my-4`}>
+      <div
+        className={`w-screen flex gap-16 items-center justify-evenly mt-12 bg-slate-100 p-16 rounded-lg`}
+      >
         {team.map((t) => (
           <div key={t.name} className="flex flex-row items-center gap-1">
             <span
               className={`${
                 t.id % 2 !== 0 ? "bg-blue-300" : "bg-pink-300"
-              } w-max p-3 rounded-lg font-bold uppercase text-3xl cursor-pointer ${
+              } w-max p-3 rounded-lg font-black uppercase text-6xl cursor-pointer ${
                 t.name === currentTeam && "ring-4 ring-orange-800"
               }`}
               onClick={() => setCurrentTeam(t.name)}
             >
               {t.name}
             </span>
-            <span className="bg-gray-200 p-3 rounded-lg text-3xl font-extrabold text-gray-900 hover:text-8xl hover:text-red-600">
+            <span className="bg-gray-200 p-3 rounded-lg text-6xl font-extrabold text-gray-900 hover:text-8xl hover:text-red-600">
               {t.score}
             </span>
           </div>
@@ -126,16 +134,16 @@ export default function Game({
           </div>
 
           <div className="flex-[80%] grid grid-cols-6">
-            {fathersQuestionData.map(({ id, cat }, i) => (
-              <div
-                key={`${id}${i}`}
-                className="px-1 col-span-1 flex flex-col items-center justify-evenly"
-              >
-                {cat.map((val, i) => (
-                  <>
+            {fathersQuestionData.map(({ id, name, cat }, ind) => {
+              return (
+                <div
+                  key={`${name}`}
+                  className={`px-1 col-span-1 flex flex-col items-center justify-evenly`}
+                >
+                  {cat.map((val, i) => (
                     <button
                       type="button"
-                      key={`${val.id}${i}`}
+                      key={`${name}-${val.id}-${ind}`}
                       disabled={
                         clickedButton.includes(
                           `${val.category}-${val.point}`
@@ -171,10 +179,10 @@ export default function Game({
                         }`}
                       />
                     </button>
-                  </>
-                ))}
-              </div>
-            ))}
+                  ))}
+                </div>
+              );
+            })}
           </div>
         </div>
 
@@ -194,9 +202,11 @@ export default function Game({
                 setNumberOfTries(0);
                 setCurrentScore(0);
                 setCurrentTeam("");
-                setEndGame(false)
+                setEndGame(false);
               }}
-              className={`font-[Nunito] font-bold uppercase text-3xl p-2 bg-emerald-400 rounded-md ${endGame ? "hidden" : "flex"} gap-2 items-center`}
+              className={`font-[Nunito] font-bold uppercase text-3xl p-2 bg-emerald-400 rounded-md ${
+                endGame ? "hidden" : "flex"
+              } gap-2 items-center`}
             >
               <CornerDownLeftIcon className="text-xs" />
               Board
@@ -205,23 +215,25 @@ export default function Game({
               <button
                 type="button"
                 onClick={() => {
-                  window.location.reload()
+                  window.location.reload();
                 }}
                 className={`font-[Nunito] font-bold uppercase text-3xl p-2 bg-red-600 rounded-md gap-2 items-center flex`}
               >
                 Restart Game
               </button>
             ) : (
-              <button
-                type="button"
-                onClick={() => {
-                  checkWinner(team);
-                  setEndGame(true);
-                }}
-                className={`font-[Nunito] font-bold uppercase text-3xl p-2 bg-red-600 rounded-md gap-2 items-center flex`}
-              >
-                End Game
-              </button>
+              flip && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    checkWinner(team);
+                    setEndGame(true);
+                  }}
+                  className={`font-[Nunito] font-bold uppercase text-3xl p-2 bg-red-600 rounded-md gap-2 items-center flex`}
+                >
+                  End Game
+                </button>
+              )
             )}
           </div>
 
@@ -255,7 +267,7 @@ export default function Game({
                     </div>
 
                     {/* QUESTION OPTIONS */}
-                    <div className="w-full flex items-center justify-between">
+                    <div className="w-full flex items-center justify-between gap-4">
                       <button
                         onClick={() => {
                           setFlip(false);
@@ -274,7 +286,7 @@ export default function Game({
 
                       <button
                         onClick={() => {
-                          setCurrentTeam("")
+                          setCurrentTeam("");
                           setFlip(true);
                           setError("");
                         }}
@@ -351,13 +363,15 @@ export default function Game({
                 className={`absolute font-bold font-[Nunito] text-8xl flex flex-col gap-2 items-center justify-center text-orange-400 p-4 h-full rotate-y-180 card-fb`}
               >
                 {!winningTeam && !endGame && currentQuestion?.answer}
-                {winningTeam?.length === 1 && endGame &&
+                {winningTeam?.length === 1 &&
+                  endGame &&
                   Parser(`The Winner is <br />
                     <span className="uppercase text-black">
                       ${winningTeam[0].name}
                     </span>`)}
                 {winningTeam &&
-                  winningTeam?.length > 1 && endGame &&
+                  winningTeam?.length > 1 &&
+                  endGame &&
                   Parser(`The Game ended in a <br />
                     <span className="uppercase text-black">Draw</span>`)}
               </div>
