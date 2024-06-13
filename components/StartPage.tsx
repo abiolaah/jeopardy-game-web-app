@@ -60,7 +60,7 @@ const StartPage = ({
               </button>
             </div>
           </div>
-          <div className="flex flex-col gap-4 justify-center items-center">
+          <div className="flex flex-col gap-8 justify-center items-center">
             {team.map((team) => (
               <div
                 key={team.id}
@@ -68,7 +68,7 @@ const StartPage = ({
               >
                 <label
                   htmlFor={`text-${team.id}`}
-                  className={`${nunito} text-lg`}
+                  className={`${nunito} text-2xl font-black`}
                 >
                   Enter Team Name
                 </label>
@@ -85,7 +85,7 @@ const StartPage = ({
             ))}
             <button
               type="button"
-              className={`ml-[238px] p-2 w-32 rounded-lg ${
+              className={`p-2 w-full rounded-lg text-2xl ${
                 allNamesAdded ? "bg-green-500" : "bg-gray-500"
               }`}
               onClick={handleStartClick}
