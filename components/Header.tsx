@@ -28,7 +28,7 @@ const Header = ({ header }: { header: string | React.ReactNode }) => {
   }, []);
   return (
     <h1
-      className={`${current} mb-0 p-2 font-bold ${ruslan_display} text-center text-3xl tracking-wider rounded-lg`}
+      className={`${current} mb-0 p-2 font-bold ${ruslan_display} text-center text-6xl tracking-wider rounded-lg`}
     >
       {header}
     </h1>
