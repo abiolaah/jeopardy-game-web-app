@@ -3,7 +3,7 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { teams } from "@/lib/data/buttonValue";
-import { amita, nunito, pacifico, ruslan_display } from "@/utils/fonts";
+import { nunito } from "@/utils/fonts";
 
 const StartPage = ({
   addTeam,

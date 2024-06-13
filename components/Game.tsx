@@ -2,31 +2,17 @@
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { dollarValue, teams } from "@/lib/data/buttonValue";
+import { teams } from "@/lib/data/buttonValue";
 import { columnData } from "@/lib/data/columns";
-import { questionData } from "@/lib/data/questions";
-import { amita, pacifico, ruslan_display } from "@/utils/fonts";
-import { Ban, CornerDownLeftIcon } from "lucide-react";
+import { amita } from "@/utils/fonts";
+import { Ban, BellIcon, CheckCheck, CornerDownLeftIcon, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import Parser from "html-react-parser";
 import Confetti from "react-confetti";
+import { tcicColumnData } from "@/lib/data/tcicColumns";
+import { allQuestion, fathersQuestionData } from "@/lib/data/tcicquestions";
 
 const clickedButton: string[] = [];
-
-// Define the Team type
-type Team = {
-  id: string;
-  name: string;
-  score: number;
-};
-
-type Question = {
-  category: string;
-  point: string;
-  question: string;
-  options: { id: number; option: string }[];
-  answer: string;
-};
 
 export default function Game({
   team,
@@ -35,7 +21,9 @@ export default function Game({
   team: typeof teams;
   setTeam: (t: typeof teams) => void;
 }) {
+
   const [numberOfTries, setNumberOfTries] = useState(0);
+  const [endGame, setEndGame] = useState(false);
   const [currentScore, setCurrentScore] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
@@ -44,6 +32,7 @@ export default function Game({
   const [error, setError] = useState("");
   const [currentTeam, setCurrentTeam] = useState("");
   const [winningTeam, setWinningTeam] = useState<Team[] | null>(null);
+  
 
   useEffect(() => {
     const winAudio = new Audio("./sounds/win.wav");
@@ -55,15 +44,16 @@ export default function Game({
       winAudio.play();
 
       // Update the teams info only when flip is true
-      setTeam((prevTeams) =>
-        prevTeams.map((team) =>
-          team.name === currentTeam
-            ? { ...team, score: team.score + currentScore }
-            : team
-        )
-      );
+      const updateTeam = () => {
+        const newTeams = team.map((t) =>
+          t.name === currentTeam ? { ...t, score: t.score + currentScore } : t
+        );
+        setTeam(newTeams);
+      };
+
+      updateTeam();
     }
-  }, [error, flip, currentScore, currentTeam, setTeam]);
+  }, [error, flip]);
 
   const handleQuestion = (q: Question) => {
     setCurrentQuestion(q);
@@ -78,9 +68,10 @@ export default function Game({
     setWinningTeam(winner);
   };
 
+
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
-      {flip && <Confetti width={2000} height={1000} numberOfPieces={1000} />}
+      {flip && <Confetti width={2000} height={1000} numberOfPieces={1000} tweenDuration={100} />}
       <Header
         header={Parser(`JEOPARDY <br />
             <span className="text-4xl">TCIC YYC FATHER&apos;S DAY EDITION</span>`)}
@@ -93,14 +84,14 @@ export default function Game({
             <span
               className={`${
                 t.id % 2 !== 0 ? "bg-blue-300" : "bg-pink-300"
-              } w-24 p-3 rounded-lg font-bold uppercase text-xl cursor-pointer ${
+              } w-max p-3 rounded-lg font-bold uppercase text-3xl cursor-pointer ${
                 t.name === currentTeam && "ring-4 ring-orange-800"
               }`}
               onClick={() => setCurrentTeam(t.name)}
             >
               {t.name}
             </span>
-            <span className="bg-gray-300 p-3 rounded-lg text-xl font-semibold">
+            <span className="bg-gray-200 p-3 rounded-lg text-3xl font-extrabold text-gray-900 hover:text-8xl hover:text-red-600">
               {t.score}
             </span>
           </div>
@@ -114,7 +105,7 @@ export default function Game({
          h-[720px] flex flex-col p-2`}
         >
           <div className="flex-[5%] grid grid-cols-6 pb-1">
-            {columnData.map((column, i) => (
+            {tcicColumnData.map((column, i) => (
               <div
                 key={column.id}
                 className={`${
@@ -126,7 +117,7 @@ export default function Game({
                 } col-span-1 rounded-md flex flex-col items-center justify-center`}
               >
                 <p
-                  className={`flex justify-center items-center rounded-lg w-full h-full text-center p-1 bg-emerald-800 text-2xl font-extrabold ${amita} text-slate-300`}
+                  className={`flex justify-center items-center rounded-lg w-full h-full text-center p-1 bg-emerald-800 text-3xl font-black ${amita} text-slate-300`}
                 >
                   {column.name}
                 </p>
@@ -135,44 +126,46 @@ export default function Game({
           </div>
 
           <div className="flex-[80%] grid grid-cols-6">
-            {columnData.map((column, i) => (
+            {fathersQuestionData.map(({ id, cat }, i) => (
               <div
-                key={i}
+                key={`${id}${i}`}
                 className="px-1 col-span-1 flex flex-col items-center justify-evenly"
               >
-                {dollarValue.map((val, i) => (
+                {cat.map((val, i) => (
                   <>
                     <button
                       type="button"
                       key={`${val.id}${i}`}
                       disabled={
-                        clickedButton.includes(`${column.name}-${val.value}`) ||
-                        !currentTeam
+                        clickedButton.includes(
+                          `${val.category}-${val.point}`
+                        ) || !currentTeam
                       }
                       onClick={() => {
-                        const question = questionData.find(
+                        const question = allQuestion.find(
                           (q) =>
-                            q.category === column.name && q.point === val.value
+                            q.category === val.category && q.point === val.point
                         );
                         if (question) {
                           handleQuestion(question);
-                          setCurrentScore(parseInt(val.value));
-                          clickedButton.push(`${column.name}-${val.value}`);
+                          setCurrentScore(parseInt(val.point));
+                          clickedButton.push(`${val.category}-${val.point}`);
                         }
                       }}
                       className={`${
                         i !== 0 ? "my-1" : "mb-1"
                       } relative flex-1 w-full rounded-lg text-5xl font-bold font-serif ${
-                        clickedButton.includes(`${column.name}-${val.value}`) ||
-                        !currentTeam
+                        clickedButton.includes(
+                          `${val.category}-${val.point}`
+                        ) || !currentTeam
                           ? "bg-gray-600"
                           : "bg-emerald-800 text-amber-300 hover:bg-gray-400"
                       }`}
                     >
-                      {val.value}
+                      {val.point}
                       <Ban
                         className={`absolute top-0 w-full h-full ${
-                          clickedButton.includes(`${column.name}-${val.value}`)
+                          clickedButton.includes(`${val.category}-${val.point}`)
                             ? "z-10"
                             : "hidden"
                         }`}
@@ -201,32 +194,48 @@ export default function Game({
                 setNumberOfTries(0);
                 setCurrentScore(0);
                 setCurrentTeam("");
+                setEndGame(false)
               }}
-              className="font-[Nunito] font-bold uppercase text-3xl p-2 bg-emerald-400 rounded-md flex gap-2 items-center"
+              className={`font-[Nunito] font-bold uppercase text-3xl p-2 bg-emerald-400 rounded-md ${endGame ? "hidden" : "flex"} gap-2 items-center`}
             >
               <CornerDownLeftIcon className="text-xs" />
               Board
             </button>
-            <button
-              type="button"
-              onClick={() => checkWinner(team)}
-              className={`font-[Nunito] font-bold uppercase text-3xl p-2 bg-red-600 rounded-md gap-2 items-center 
-              ${
-                clickedButton.length === questionData.length ? "flex" : "hidden"
-              }
-                  `}
-            >
-              End Game
-            </button>
+            {endGame ? (
+              <button
+                type="button"
+                onClick={() => {
+                  window.location.reload()
+                }}
+                className={`font-[Nunito] font-bold uppercase text-3xl p-2 bg-red-600 rounded-md gap-2 items-center flex`}
+              >
+                Restart Game
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  checkWinner(team);
+                  setEndGame(true);
+                }}
+                className={`font-[Nunito] font-bold uppercase text-3xl p-2 bg-red-600 rounded-md gap-2 items-center flex`}
+              >
+                End Game
+              </button>
+            )}
           </div>
 
           <div
+            // onClick={() => {
+            //   setFlip(true);
+            //   setError("");
+            // }}
             className={`relative flex flex-[85%] h-full items-center justify-center rounded-lg shadow-md bg-white card ${
               flip ? "flip" : ""
             }`}
           >
             <div className="absolute flex items-center justify-center p-4 h-full card-fb">
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center justify-center space-y-20">
                 <span
                   className={`${
                     error ? "block" : "hidden"
@@ -246,7 +255,47 @@ export default function Game({
                     </div>
 
                     {/* QUESTION OPTIONS */}
-                    <div className="flex flex-col gap-2 mt-8 text-2xl items-start font-semibold text-gray-300">
+                    <div className="w-full flex items-center justify-between">
+                      <button
+                        onClick={() => {
+                          setFlip(false);
+                          setNumberOfTries((prev) => prev + 1);
+                          numberOfTries === 1
+                            ? setError(
+                                "You don't get the point this time! Better Luck Next Time!"
+                              )
+                            : setError("Try again! One more try!");
+                        }}
+                        type="button"
+                        className="text-red-500 text-xl font-bold flex gap-2 items-center justify-center ring-1 ring-black rounded-xl hover:text-white hover:bg-red-500 p-2"
+                      >
+                        <X /> Wrong
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setCurrentTeam("")
+                          setFlip(true);
+                          setError("");
+                        }}
+                        type="button"
+                        className="text-gray-600 text-xl font-bold flex gap-2 items-center justify-center ring-1 ring-black rounded-xl hover:text-white hover:bg-blue-500 p-2"
+                      >
+                        <BellIcon /> Better Luck Next Time
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          setFlip(true);
+                          setError("");
+                        }}
+                        type="button"
+                        className="text-blue-500 text-xl font-bold flex gap-2 items-center justify-center ring-1 ring-black rounded-xl hover:text-white hover:bg-blue-500 p-2"
+                      >
+                        <CheckCheck /> Correct
+                      </button>
+                    </div>
+                    {/* <div className="flex flex-col gap-2 mt-8 text-2xl items-start font-semibold text-gray-300">
                       {currentQuestion.options.map((option) => (
                         <div
                           key={`${option.id}`}
@@ -287,7 +336,7 @@ export default function Game({
                           {option.option}{" "}
                         </div>
                       ))}
-                    </div>
+                    </div> */}
                   </>
                 )}
 
@@ -301,13 +350,14 @@ export default function Game({
                 // key={q.id}
                 className={`absolute font-bold font-[Nunito] text-8xl flex flex-col gap-2 items-center justify-center text-orange-400 p-4 h-full rotate-y-180 card-fb`}
               >
-                {winningTeam == null && currentQuestion?.answer}
-                {winningTeam?.length === 1 &&
+                {!winningTeam && !endGame && currentQuestion?.answer}
+                {winningTeam?.length === 1 && endGame &&
                   Parser(`The Winner is <br />
                     <span className="uppercase text-black">
                       ${winningTeam[0].name}
                     </span>`)}
-                {winningTeam?.length > 1 &&
+                {winningTeam &&
+                  winningTeam?.length > 1 && endGame &&
                   Parser(`The Game ended in a <br />
                     <span className="uppercase text-black">Draw</span>`)}
               </div>

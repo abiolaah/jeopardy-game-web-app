@@ -5,8 +5,9 @@ import StartPage from "@/components/StartPage";
 import { teams } from "@/lib/data/buttonValue";
 import { useState } from "react";
 
+
 const HomePage = () => {
-  const [team, setTeam] = useState<typeof teams>(teams);
+  const [team, setTeam] = useState<Team[]>(teams);
   const [teamNamesAdded, setTeamNamesAdded] = useState(false);
   const [gameStart, setGameStart] = useState(false);
 

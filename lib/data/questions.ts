@@ -234,7 +234,7 @@ export const questionData = [
     options: [
       { id: "a", option: "Steven Spielberg" },
       { id: "b", option: "George Clooney" },
-      { id: "c", option: "Robert Downey Jr" },
+      { id: "c", option: "Robert Downey Jr." },
     ],
     answer: "Robert Downey Jr.",
     category: "Movies",
@@ -256,7 +256,7 @@ export const questionData = [
     id: 22,
     question: `Which band released the album "A Hard Day's Night"?`,
     options: [
-      { id: "a", option: "The Beatle" },
+      { id: "a", option: "The Beatles" },
       { id: "b", option: "Backstreet boys" },
       { id: "c", option: "The Monkees" },
     ],
@@ -292,9 +292,9 @@ export const questionData = [
     id: 25,
     question: `What is the best-selling album of all time?`,
     options: [
-      { id: "a", option: "Taylor Swift" },
-      { id: "b", option: "Michael Jackson" },
-      { id: "c", option: "Beyonce" },
+      { id: "a", option: "1989 by Taylor Swift" },
+      { id: "b", option: "Thriller byMichael Jackson" },
+      { id: "c", option: "Dangerously In Love by Beyonce" },
     ],
     answer: "Thriller by Michael Jackson",
     category: "Music",
