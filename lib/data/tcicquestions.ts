@@ -213,7 +213,7 @@ export const fathersQuestionData = [
       {
         id: 4,
         question: `Name the shortest verse in the Bible?`,
-        answer: `"What is "Jesus wept." Gospel of John, chapter 11, verse 35."`,
+        answer: `What is "Jesus wept." Gospel of John, chapter 11, verse 35.`,
         category: "Trivia",
         point: "400",
       },
@@ -566,7 +566,7 @@ export const allQuestion = [
   {
     id: 4,
     question: `Name the shortest verse in the Bible?`,
-    answer: `"What is "Jesus wept." Gospel of John, chapter 11, verse 35."`,
+    answer: `What is "Jesus wept." Gospel of John, chapter 11, verse 35.`,
     category: "Trivia",
     point: "400",
   },
