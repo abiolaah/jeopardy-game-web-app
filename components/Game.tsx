@@ -28,6 +28,7 @@ export default function Game({
 
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [flip, setFlip] = useState(false);
+  const [noPoint, setNoPoint] = useState(false);
   const [error, setError] = useState("");
   const [currentTeam, setCurrentTeam] = useState("");
   const [winningTeam, setWinningTeam] = useState<Team[] | null>(null);
@@ -203,6 +204,7 @@ export default function Game({
                 setCurrentScore(0);
                 setCurrentTeam("");
                 setEndGame(false);
+                setNoPoint(false);
               }}
               className={`font-[Nunito] font-bold uppercase text-3xl p-2 bg-emerald-400 rounded-md ${
                 endGame ? "hidden" : "flex"
@@ -243,7 +245,7 @@ export default function Game({
             //   setError("");
             // }}
             className={`relative flex flex-[85%] h-full items-center justify-center rounded-lg shadow-md bg-white card ${
-              flip ? "flip" : ""
+              flip || noPoint ? "flip" : ""
             }`}
           >
             <div className="absolute flex items-center justify-center p-4 h-full card-fb">
@@ -287,7 +289,7 @@ export default function Game({
                       <button
                         onClick={() => {
                           setCurrentTeam("");
-                          setFlip(true);
+                          setNoPoint(true);
                           setError("");
                         }}
                         type="button"
