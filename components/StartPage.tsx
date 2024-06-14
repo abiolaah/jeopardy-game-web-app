@@ -39,7 +39,7 @@ const StartPage = ({
 
       {!allNamesAdded && (
         <div
-          className="p-4 mb-4 text-xl text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          className={`p-4 mb-4 text-3xl text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 ${ruslan_display}`}
           role="alert"
         >
           <span className="font-bold">Info alert!</span> Add team names to begin
@@ -90,6 +90,7 @@ const StartPage = ({
                   type="text"
                   id={`${team.id}`}
                   name={`Team-${team.id}`}
+                  autoComplete="off"
                   value={team.name}
                   placeholder={`Team ${team.id}`}
                   onChange={changeTeamName}
