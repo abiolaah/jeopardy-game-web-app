@@ -86,7 +86,7 @@ export default function Game({
 
       {/* SCORE BOARD */}
       <div
-        className={`w-screen flex gap-16 items-center justify-evenly mt-12 bg-slate-100 p-16 rounded-lg`}
+        className={`w-screen flex gap-8 items-center justify-between mt-12 bg-slate-100 p-16 rounded-lg`}
       >
         {team.map((t) => (
           <div key={t.name} className="flex flex-row items-center gap-1">
