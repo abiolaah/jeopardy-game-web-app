@@ -32,9 +32,20 @@ const StartPage = ({
   };
   return (
     <div className="relative min-h-screen flex flex-col gap-6 items-center justify-center px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
-      <div className="absolute top-0 mb-6 w-full">
+      <div className="absolute top-0 w-full">
         <Header header="WELCOME TO JEOPARDY GAME" />
       </div>
+
+      {!allNamesAdded && (
+        <div
+          className="p-4 mb-4 text-xl text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert"
+        >
+          <span className="font-bold">Info alert!</span> Add team names to begin
+          the game.
+        </div>
+      )}
+
       <div className="w-full p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
         <div className="flex-1 flex flex-col gap-5 w-full">
           <div className="flex gap-16 justify-between px-8 w-full">

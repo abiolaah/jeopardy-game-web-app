@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { teams } from "@/lib/data/buttonValue";
 import { columnData } from "@/lib/data/columns";
-import { amita } from "@/utils/fonts";
+import { amita, pacifico } from "@/utils/fonts";
 import { Ban, BellIcon, CheckCheck, CornerDownLeftIcon, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import Parser from "html-react-parser";
@@ -80,7 +80,7 @@ export default function Game({
       <div className="absolute top-0 mb-16 w-full">
         <Header
           header={Parser(`JEOPARDY <br />
-            <span className="text-4xl">TCIC YYC FATHER&apos;S DAY EDITION</span>`)}
+            <span className="text-5xl">TCIC YYC FATHER&apos;S DAY EDITION</span>`)}
         />
       </div>
 
@@ -126,7 +126,7 @@ export default function Game({
                 } col-span-1 rounded-md flex flex-col items-center justify-center`}
               >
                 <p
-                  className={`flex justify-center items-center rounded-lg w-full h-full text-center p-1 bg-emerald-800 text-3xl font-black ${amita} text-slate-300`}
+                  className={`flex justify-center items-center rounded-lg w-full h-full text-center p-1 bg-emerald-800 text-4xl font-black ${pacifico} text-slate-300`}
                 >
                   {column.name}
                 </p>
@@ -224,7 +224,7 @@ export default function Game({
                 Restart Game
               </button>
             ) : (
-              flip && (
+              (noPoint || flip) && (
                 <button
                   type="button"
                   onClick={() => {
