@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { teams } from "@/lib/data/buttonValue";
 import { adlam, nunito, pacifico, ruslan_display } from "@/utils/fonts";
+import { ModeToggle } from "./ThemeChanger";
 
 const StartPage = ({
   addTeam,
@@ -69,6 +70,8 @@ const StartPage = ({
               >
                 Reset
               </button>
+
+              <ModeToggle />
             </div>
           </div>
           <div className="flex flex-col gap-8 justify-center items-center">
