@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath:"/jeopardy-game-web-app",
-    output:'export',
+    basePath: "/jeopardy-game-web-app",
+    output: 'export',
     reactStrictMode: true
 };
 
