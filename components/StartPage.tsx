@@ -22,6 +22,7 @@ const StartPage = ({
   team: typeof teams;
 }) => {
   const allNamesAdded = team.every((t) => t.name.trim() !== "");
+  const uniqueNames = new Set(team.map((t) => t.name)).size === team.length;
 
   const handleStartClick = () => {
     if (allNamesAdded) {
@@ -101,10 +102,10 @@ const StartPage = ({
             <button
               type="button"
               className={`p-2 w-full rounded-lg text-2xl ${
-                allNamesAdded ? "bg-green-500" : "bg-gray-500"
+                allNamesAdded && uniqueNames ? "bg-green-500" : "bg-gray-500"
               }`}
               onClick={handleStartClick}
-              disabled={!allNamesAdded}
+              disabled={!allNamesAdded || !uniqueNames}
             >
               Start
             </button>
