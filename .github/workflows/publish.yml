@@ -1,3 +1,4 @@
+# File: .github/workflows/publish.yml
 name: publish-to-github-pages
 on:
   push:
@@ -23,8 +24,6 @@ jobs:
 
       - name: Setup Node.js ⚙️ - Cache dependencies ⚡ - Install dependencies 🔧
         uses: ./.github/workflows/setup-node
-        with:
-          node-version: '20'
 
       - name: Setup Pages ⚙️
         uses: actions/configure-pages@v4
@@ -32,7 +31,10 @@ jobs:
           static_site_generator: next
 
       - name: Build with Next.js 🏗️
-        run: npx next build
+        run: npx next build && npx next export
+
+      - name: List directory contents for debugging 🐞
+        run: ls -R ./out
 
       - name: Upload artifact 📡
         uses: actions/upload-pages-artifact@v3
