@@ -263,7 +263,7 @@ export default function Game({
                     {/* QUESTION */}
                     <div
                       // key={`${q.category}-${q.point}`}
-                      className="text-3xl font-bold font-serif text-blue-600"
+                      className="text-7xl font-bold font-serif text-blue-600"
                     >
                       {currentQuestion.question}
                     </div>
