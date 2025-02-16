@@ -80,7 +80,7 @@ export default function Game({
       <div className="absolute top-0 mb-16 w-full">
         <Header
           header={Parser(`JEOPARDY <br />
-            <span className="text-5xl">TCIC YYC FATHER&apos;S DAY EDITION</span>`)}
+            <span className="text-5xl">TCIC YYC FAMILY&apos;S DAY EDITION</span>`)}
         />
       </div>
 
