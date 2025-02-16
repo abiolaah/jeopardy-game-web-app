@@ -54,7 +54,7 @@ const StartPage = ({
             <h2
               className={`${adlam} text-4xl font-black uppercase text-red-500`}
             >
-              TCIC YYC FATHER&apos;S DAY EDITION
+              TCIC YYC FAMILY&apos;S DAY EDITION
             </h2>
             <div className="flex gap-4">
               <button
